@@ -98,18 +98,10 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Failed to load and verify BPF skeleton\n");
 		goto cleanup;
 	}
-	LIBBPF_OPTS(bpf_uprobe_opts, attach_opts, .func_name = "test",
+	LIBBPF_OPTS(bpf_uprobe_opts, attach_opts, .func_name = "malloc",
 		    .retprobe = false);
 	struct bpf_link *attach = bpf_program__attach_uprobe_opts(
-		skel->progs.do_count, -1, "/home/yangyx/desktop/bpftime/example/malloc/example", 0, &attach_opts);
-	// LIBBPF_OPTS(bpf_uprobe_opts, attach_opts, .func_name = "malloc",
-	// 	    .retprobe = false);
-	// struct bpf_link *attach = bpf_program__attach_uprobe_opts(
-	// 	skel->progs.do_count, -1, "libc.so.6", 0, &attach_opts);
-	// LIBBPF_OPTS(bpf_uprobe_opts, attach_opts, .func_name = "printf",
-	// 	    .retprobe = false);
-	// struct bpf_link *attach = bpf_program__attach_uprobe_opts(
-	// 	skel->progs.do_count, -1, "libc.so.6", 0, &attach_opts);
+		skel->progs.do_count, -1, "libc.so.6", 0, &attach_opts);
 	if (!attach) {
 		fprintf(stderr, "Failed to attach BPF skeleton\n");
 		err = -1;

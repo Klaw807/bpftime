@@ -26,15 +26,12 @@ static int increment_map(void *map, void *key, u64 increment)
 	return *count;
 }
 
-// SEC("uprobe/libc.so.6:malloc")
-// SEC("uprobe/example:test")
 SEC("uprobe/libc.so.6:malloc")
 int do_count(struct pt_regs *ctx)
 {
 	u32 pid = bpf_get_current_pid_tgid() >> 32;
 
-	// bpf_printk("malloc called from pid %d\n", pid);
-	bpf_printk("test called from pid %d\n", pid);
+	bpf_printk("malloc called from pid %d\n", pid);
 
 	increment_map(&libc_malloc_calls_total, &pid, 1);
 
