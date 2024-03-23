@@ -54,11 +54,8 @@ int main(int argc, char **argv)
 		goto cleanup;
 	}
 	err = bpf_prog_attach_uprobe_with_override(
-		bpf_program__fd(skel->progs.do_uprobe_override_patch), "libc.so.6",
-		"write");
-	// err = bpf_prog_attach_uprobe_with_override(
-	// 	bpf_program__fd(skel->progs.do_uprobe_override_patch), "./victim",
-	// 	"target_func");
+		bpf_program__fd(skel->progs.do_uprobe_override_patch), "./victim",
+		"target_func");
 	if (err) {
 		fprintf(stderr, "Failed to attach BPF program\n");
 		goto cleanup;
