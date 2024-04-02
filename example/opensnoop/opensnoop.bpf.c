@@ -32,7 +32,8 @@ int tracepoint__syscalls__sys_enter_open(struct trace_event_raw_sys_enter *ctx)
 	args.fname = (const char *)ctx->args[0];
 	args.flags = (int)ctx->args[1];
 	bpf_map_update_elem(&start, &pid, &args, 0);
-
+	bpf_printk("args.fname:%s\n", args.fname);
+	bpf_printk("hello hello\n");
 	return 0;
 }
 
@@ -51,6 +52,8 @@ int tracepoint__syscalls__sys_enter_openat(struct trace_event_raw_sys_enter *ctx
 	args.fname = (const char *)ctx->args[1];
 	args.flags = (int)ctx->args[2];
 	bpf_map_update_elem(&start, &pid, &args, 0);
+	bpf_printk("args.fname:%s\n", args.fname);
+	bpf_printk("hello hello\n");
 	// }
 	return 0;
 }

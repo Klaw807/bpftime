@@ -3,11 +3,17 @@
 #include <bpf/bpf_helpers.h>
 #include <bpf/bpf_tracing.h>
 
-SEC("uprobe/./victim:target_func")
-int do_uprobe_trace(struct pt_regs *ctx)
+SEC("uprobe//home/huyp/ayyx/bpftime/example/minimal/victim:target_func")
+int BPF_UPROBE(target_func, int a)
 {
-	bpf_printk("target_func called.\n");
+	bpf_printk("target_func called. : %d\n", a);
 	return 0;
 }
+// SEC("uprobe/./victim:target_func")
+// int do_uprobe_trace(struct pt_regs *ctx)
+// {
+// 	bpf_printk("target_func called.\n");
+// 	return 0;
+// }
 
 char LICENSE[] SEC("license") = "GPL";

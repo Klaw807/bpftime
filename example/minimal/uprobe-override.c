@@ -53,11 +53,29 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Failed to load and verify BPF skeleton\n");
 		goto cleanup;
 	}
+	// err = bpf_prog_attach_uprobe_with_override(
+	// 	bpf_program__fd(skel->progs.write_to_nvme), "libc.so.6",
+	// 	"write");
+	// err = bpf_prog_attach_uprobe_with_override(
+	// 	bpf_program__fd(skel->progs.write_to_nvme), "/lib/x86_64-linux-gnu/libc.so.6",
+	// 	"write");
 	err = bpf_prog_attach_uprobe_with_override(
-		bpf_program__fd(skel->progs.do_uprobe_override_patch), "libc.so.6",
+		bpf_program__fd(skel->progs.write_to_nvme), "/lib/x86_64-linux-gnu/libc.so.6",
 		"write");
 	// err = bpf_prog_attach_uprobe_with_override(
-	// 	bpf_program__fd(skel->progs.do_uprobe_override_patch), "./victim",
+	// 	bpf_program__fd(skel->progs.sleep), "/lib/x86_64-linux-gnu/libc.so.6",
+	// 	"sleep");
+	// err = bpf_prog_attach_uprobe_with_override(
+	// 	bpf_program__fd(skel->progs.write_to_nvme), "/lib/x86_64-linux-gnu/libc.so.6",
+	// 	"printf");
+	// err = bpf_prog_attach_uprobe_with_override(
+	// 	bpf_program__fd(skel->progs.write_to_nvme), "libc.so.6",
+	// 	"printf");
+	// err = bpf_prog_attach_uprobe_with_override(
+	// 	bpf_program__fd(skel->progs.write_to_nvme), "/home/huyp/sqlite/WALDIO/bin/sqlite3",
+	// 	"printf");
+	// err = bpf_prog_attach_uprobe_with_override(
+	// 	bpf_program__fd(skel->progs.write_to_nvme), "/home/huyp/ayyx/bpftime/example/minimal/victim",
 	// 	"target_func");
 	if (err) {
 		fprintf(stderr, "Failed to attach BPF program\n");
